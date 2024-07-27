@@ -6,6 +6,7 @@ In the base model folder is a basic model you can use for whatever purpose.
 In the Interactive model folder is a model coded with the ability to test it built in already. You can simply download it and run it (If you have everything downloaded) then it'll prompt you to give it your message and it'll analyze it.
 # Requirements
 This script uses AI models and quite a few imports, as you can tell if you look over the code. This should cover the imports and the imports will cover downloading the AI Models: pip install nltk textblob transformers afinn flair torch emoji
-Oh and also it appears to be lightweight but my computer could just be strong. I don't know what specs I should recommend for using this.
+# Processing Power
+It appears to be lightweight despite the use of multiple AI models but my computer could just be strong. I don't know what specs I should recommend for using this.
 # Notes
 To detect sarcasm I used a single AI model I found on huggingface. Take it's detections with a grain of salt, just about any bit of text will trip it.
