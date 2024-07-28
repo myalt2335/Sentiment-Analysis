@@ -1,5 +1,4 @@
-import os
-import subprocess
+import logging
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
 from textblob import TextBlob
@@ -12,13 +11,15 @@ import emoji
 
 nltk.download('vader_lexicon')
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 sia = SentimentIntensityAnalyzer()
 transformer_pipeline = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
 afinn = Afinn()
 flair_sentiment = TextClassifier.load('sentiment-fast')
 emotion_pipeline = pipeline("sentiment-analysis", model="j-hartmann/emotion-english-distilroberta-base")
 emotion_text_cnn_pipeline = pipeline("sentiment-analysis", model="bhadresh-savani/distilbert-base-uncased-emotion")
-sarcasm_model = pipeline("text-classification", model="nikesh66/Sarcasm-Detection-using-BERT")
 
 tokenizer = AutoTokenizer.from_pretrained("monologg/bert-base-cased-goemotions-original")
 model = AutoModelForSequenceClassification.from_pretrained("monologg/bert-base-cased-goemotions-original")
@@ -53,8 +54,12 @@ def get_afinn_sentiment(text):
     return afinn.score(text) / 10.0
 
 def get_flair_sentiment(text):
+    if not text.strip():
+        return 0.0
     sentence = Sentence(text)
     flair_sentiment.predict(sentence)
+    if not sentence.labels:
+        return 0.0
     sentiment = sentence.labels[0]
     if sentiment.value == 'POSITIVE':
         return sentiment.score
@@ -90,13 +95,6 @@ def get_goemotions_sentiment(text):
     max_score_idx = torch.argmax(scores).item()
     return labels[max_score_idx], scores[0][max_score_idx].item()
 
-def detect_sarcasm(text):
-    results = sarcasm_model(text)
-    for result in results:
-        if result['label'] == "Sarcasm":
-            return True, result['score']
-    return False, 0.0
-
 def extract_emojis(text):
     return [char for char in text if char in emoji.EMOJI_DATA]
 
@@ -117,58 +115,50 @@ def get_combined_sentiment_with_emojis(text):
         combined_score = text_sentiment
     return combined_score
 
-def analyze_text(text):
-    combined_score = get_combined_sentiment_with_emojis(text)
-    
-    if combined_score > 0.05:
-        basic_sentiment_category = 'positive'
-    elif combined_score < -0.05:
-        basic_sentiment_category = 'negative'
-    else:
-        basic_sentiment_category = 'neutral'
-
-    emotion = get_emotion_sentiment(text)
-    emotion_text_cnn = get_emotion_text_cnn_sentiment(text)
-    goemotion_label, goemotion_score = get_goemotions_sentiment(text)
-
-    emotion_results = {
-        emotion['label']: emotion['score'],
-        emotion_text_cnn['label']: emotion_text_cnn['score'],
-        goemotion_label: goemotion_score
+def combine_emotion_results(results):
+    grouped_emotions = {
+        'positive': ['admiration', 'approval', 'gratitude', 'joy', 'love', 'optimism', 'pride', 'relief'],
+        'negative': ['anger', 'annoyance', 'disappointment', 'disapproval', 'disgust', 'fear', 'grief', 'nervousness', 'remorse', 'sadness'],
+        'neutral': ['neutral'],
+        'surprise': ['amusement', 'confusion', 'curiosity', 'excitement', 'realization', 'surprise'],
+        'caring': ['caring'],
+        'desire': ['desire'],
+        'embarrassment': ['embarrassment']
     }
-
-    combined_emotions = {}
-    for label, score in emotion_results.items():
-        if label in combined_emotions:
-            combined_emotions[label].append(score)
-        else:
-            combined_emotions[label] = [score]
-
-    for label, scores in combined_emotions.items():
-        combined_emotions[label] = sum(scores) / len(scores)
-
-    response = f'The text is {basic_sentiment_category}. '
-    for label, avg_score in combined_emotions.items():
-        response += f'It was also detected as {label} with a confidence of {avg_score:.2f}. '
-
-    sarcasm_detected, sarcasm_score = detect_sarcasm(text)
-    if sarcasm_detected:
-        response += f'Sarcasm detected with a confidence of {sarcasm_score:.2f}.'
-
-    return response
+    
+    combined_results = {}
+    for label, score in results.items():
+        for category, labels in grouped_emotions.items():
+            if label in labels:
+                if category not in combined_results:
+                    combined_results[category] = []
+                combined_results[category].append(score)
+    
+    averaged_results = {category: sum(scores) / len(scores) for category, scores in combined_results.items()}
+    return averaged_results
 
 def main():
-    print("Sentiment Analysis Tool")
-    print("Type 'exit' to close the program.")
-    
     while True:
-        user_input = input("Enter your message: ")
-        if user_input.lower() == 'exit':
-            print("Exiting the program.")
+        try:
+            text = input("Enter a message to analyze (or type 'exit' to quit): ")
+            if text.lower() == 'exit':
+                break
+            
+            combined_sentiment = get_combined_sentiment(text)
+            emotion_sentiment = get_emotion_sentiment(text)
+            emotion_text_cnn_sentiment = get_emotion_text_cnn_sentiment(text)
+            goemotions_sentiment = get_goemotions_sentiment(text)
+            combined_with_emojis = get_combined_sentiment_with_emojis(text)
+            
+            print(f"Combined Sentiment Score: {combined_sentiment:.2f}")
+            print(f"Emotion Sentiment (BERT): {emotion_sentiment}")
+            print(f"Emotion Sentiment (CNN): {emotion_text_cnn_sentiment}")
+            print(f"GoEmotions Sentiment: {goemotions_sentiment}")
+            print(f"Combined Sentiment with Emojis: {combined_with_emojis:.2f}")
+            
+        except KeyboardInterrupt:
+            print("\nExiting...")
             break
-        
-        result = analyze_text(user_input)
-        print(result)
 
 if __name__ == "__main__":
     main()
