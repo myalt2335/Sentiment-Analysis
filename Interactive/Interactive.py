@@ -12,7 +12,6 @@ import emoji
 
 nltk.download('vader_lexicon')
 
-# Initialize sentiment analysis models
 sia = SentimentIntensityAnalyzer()
 transformer_pipeline = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
 afinn = Afinn()
