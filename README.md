@@ -1,5 +1,5 @@
 # Sentiment-Analysis
-Sentiment + Emotion detector bot (I used to detect sarcasm but there's no real good easy way to do that)
+Sentiment + Emotion detector bot (It used to detect sarcasm but there's no real good easy way to do that)
 # Base Model
 In the base model folder is a basic model you can use for whatever purpose.
 # Interactive Model
