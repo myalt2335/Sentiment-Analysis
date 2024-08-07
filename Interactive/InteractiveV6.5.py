@@ -9,7 +9,7 @@ from flair.data import Sentence
 import torch
 import emoji
 
-nltk.download('vader_lexicon') # Hello from AltPy
+nltk.download('vader_lexicon')
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
