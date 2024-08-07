@@ -9,4 +9,4 @@ This script uses AI models and quite a few imports, as you can tell if you look 
 # Processing Power
 It appears to be lightweight despite the use of multiple AI models but my computer could just be strong. I don't know what specs I should recommend for using this.
 # Notes
-To detect sarcasm I used a single AI model I found on huggingface. Take it's detections with a grain of salt, just about any bit of text will trip it. (You can ignore this if your using the latest version where its removed)
+To detect sarcasm I used a single AI model I found on huggingface. Take it's detections with a grain of salt, just about any bit of text will trip it. (You can ignore this if your using the latest version where its removed) also if your reading this please star this repository please please I beg of you
