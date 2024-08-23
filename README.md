@@ -1,3 +1,5 @@
+# Quick message
+Hello! I created this as a side project and have since moved on to other things. This project will likely receive few or no updates in the future. It has always been, and will remain, open source, so I hope others can continue to build on what I’ve started here.
 # Sentiment-Analysis
 Sentiment + Emotion detector bot (It used to detect sarcasm but there's no real good easy way to do that)
 # Base Model
