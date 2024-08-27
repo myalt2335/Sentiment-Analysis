@@ -6,8 +6,24 @@ Sentiment + Emotion detector bot (It used to detect sarcasm but there's no real 
 In the base model folder is a basic model you can use for whatever purpose.
 # Interactive Model
 In the Interactive model folder is a model coded with the ability to test it built in already. You can simply download it and run it (If you have everything downloaded) then it'll prompt you to give it your message and it'll analyze it.
+
 # Requirements
-This script uses AI models and quite a few imports, as you can tell if you look over the code. This should cover the imports and the imports will cover downloading the AI Models: pip install nltk textblob transformers afinn flair torch emoji
+
+This script uses various AI models and dependencies, which require careful version management. Follow the steps below to ensure the correct versions are installed:
+
+1. First, uninstall any conflicting versions of the required libraries:
+
+```bash
+pip uninstall -y numpy Pillow gymnasium shimmy facenet-pytorch stable-baselines3 torch torchaudio
+```
+
+2. Then, install the correct versions of the libraries:
+
+```bash
+pip install numpy<2.0 Pillow==10.2.0 gymnasium==0.29.1 stable-baselines3==2.3.2 shimmy==1.0.0 torch==2.2.0 torchaudio==2.2.0 facenet-pytorch==2.6.0
+```
+
+If you don’t already have the modules listed above, this step will install them directly.
 # Processing Power
 It appears to be lightweight despite the use of multiple AI models but my computer could just be strong. I don't know what specs I should recommend for using this.
 # Notes
