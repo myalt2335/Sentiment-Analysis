@@ -24,6 +24,8 @@ pip install numpy<2.0 Pillow==10.2.0 gymnasium==0.29.1 stable-baselines3==2.3.2 
 ```
 
 If you don’t already have the modules listed above, this step will install them directly.
+# 11/20/24 update
+If your reading this, its possible some of the modules required by this script aren't listed above even though they should be. Maybe I personally have this error because I removed a lot of my modules but if you encounter ANY errors at all, its most likely a module related error.
 # Processing Power
 It appears to be lightweight despite the use of multiple AI models but my computer could just be strong. I don't know what specs I should recommend for using this.
 # Notes
