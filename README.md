@@ -11,16 +11,10 @@ In the Interactive model folder is a model coded with the ability to test it bui
 
 This script uses various AI models and dependencies, which require careful version management. Follow the steps below to ensure the correct versions are installed:
 
-1. First, uninstall any conflicting versions of the required libraries:
+1. You can ensure everything is downloaded with
 
 ```bash
-pip uninstall -y numpy Pillow gymnasium shimmy facenet-pytorch stable-baselines3 torch torchaudio
-```
-
-2. Then, install the correct versions of the libraries:
-
-```bash
-pip install numpy<2.0 Pillow==10.2.0 gymnasium==0.29.1 stable-baselines3==2.3.2 shimmy==1.0.0 torch==2.2.0 torchaudio==2.2.0 facenet-pytorch==2.6.0
+pip install nltk textblob transformers afinn flair torch emoji
 ```
 
 If you don’t already have the modules listed above, this step will install them directly.
