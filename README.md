@@ -3,7 +3,7 @@ Hello! I created this as a side project and have since moved on to other things.
 # Sentiment-Analysis
 Sentiment/Emotion detector bot (It used to detect sarcasm but there's no real good easy way to do that)
 # Base Model
-In the base model folder is a basic model you can use for whatever purpose.
+No Base Model is currently available, I don't feel like shaving down my code. Sorry.
 # Interactive Model
 In the Interactive model folder is a model coded with the ability to test it built in already. You can simply download it and run it (If you have every requirement downloaded) then it'll prompt you to give it your message and it'll analyze it.
 
