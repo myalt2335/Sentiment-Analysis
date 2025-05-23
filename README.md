@@ -1,7 +1,7 @@
 # Quick message
 Hello! I created this as a side project and have since moved on to other things. This project will likely receive few or no updates in the future. It has always been, and will remain, open source, so I hope others can continue to build on what I’ve started here.
 # Sentiment-Analysis
-Sentiment + Emotion detector bot (It used to detect sarcasm but there's no real good easy way to do that)
+Sentiment/Emotion detector bot (It used to detect sarcasm but there's no real good easy way to do that)
 # Base Model
 In the base model folder is a basic model you can use for whatever purpose.
 # Interactive Model
@@ -14,7 +14,7 @@ This script uses various AI models and dependencies, which require careful versi
 1. You can ensure everything is downloaded with
 
 ```bash
-pip install nltk textblob transformers afinn flair torch emoji
+pip install nltk textblob transformers afinn torch emoji rich
 ```
 
 If you don’t already have the modules listed above, this step will install them directly.
